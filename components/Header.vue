@@ -3,7 +3,7 @@
     <div
       class="logo-cnt flex items-center inline-flex py-2 px-0.5 -m-0.5 leading-none rounded focus-visible:ring-2 ring-offset-2 transition-all outline-none"
     >
-      <h1>Vending Machine</h1>
+      <h1 class="text-xl font-bold p-4">Vending Machine</h1>
     </div>
     <nav
       class="hidden md:flex flex-1 items-center md:mx-6 lg:mx-16 md:space-x-1 lg:space-x-4 xl:space-x-6"
@@ -78,15 +78,10 @@ export default Vue.extend({
     logoutFn: async function () {
       window.localStorage.removeItem("token");
       window.localStorage.removeItem("user");
-      this.$router.push("/login");
       this.token = null;
       this.user = {};
+      this.$router.push("/login");
     },
   },
 });
 </script>
-<style>
-.logo-cnt {
-  height: 50px;
-}
-</style>

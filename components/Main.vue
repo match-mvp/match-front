@@ -99,51 +99,42 @@ export default {
       this.$router.push("/login");
       return;
     }
-    const data = await this.$axios.$get("http://localhost:4000/api/products", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const _data = await this.$axios.$get("http://localhost:4000/api/users/me", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    this.products = data?.products;
-    if (_data) {
-      console.log(_data);
-      this.user = _data;
-      localStorage.setItem("user", JSON.stringify(_data));
-    } else {
-      window.localStorage.clear();
-      this.$router.push("/login");
-    }
-  },
-  methods: {
-    buyFn: async function (product, amountOfProducts) {
-      const data = await this.$axios.$post(
-        "http://localhost:4000/api/buy",
-        {
-          productId: +product.id,
-          amountOfProducts: +this.amountOfProducts,
-        },
+    try {
+      const data = await this.$axios.$get(
+        "http://localhost:4000/api/products",
         {
           headers: {
-            Authorization: `Bearer ${getUserToken()}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      if (!data.error) {
-        alert("Item successfully bought.");
-        window.location.reload();
+      const _data = await this.$axios.$get(
+        "http://localhost:4000/api/users/me",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      this.products = data?.products;
+      if (_data) {
+        this.user = _data;
+        localStorage.setItem("user", JSON.stringify(_data));
       } else {
-        window.alert(data.msg);
+        window.localStorage.clear();
+        this.$router.push("/login");
       }
-    },
-    deleteFn: async function (product) {
-      if (window.confirm("Do you want to delete this product?")) {
-        const data = await this.$axios.$delete(
-          "http://localhost:4000/api/products/" + product.id,
+    } catch (error) {}
+  },
+  methods: {
+    buyFn: async function (product) {
+      try {
+        const data = await this.$axios.$post(
+          "http://localhost:4000/api/buy",
+          {
+            productId: +product.id,
+            amountOfProducts: +this.amountOfProducts,
+          },
           {
             headers: {
               Authorization: `Bearer ${getUserToken()}`,
@@ -151,12 +142,32 @@ export default {
           }
         );
         if (!data.error) {
-          alert("Item successfully deleted.");
+          alert("Item successfully bought.");
           window.location.reload();
         } else {
           window.alert(data.msg);
         }
-      }
+      } catch (error) {}
+    },
+    deleteFn: async function (product) {
+      try {
+        if (window.confirm("Do you want to delete this product?")) {
+          const data = await this.$axios.$delete(
+            "http://localhost:4000/api/products/" + product.id,
+            {
+              headers: {
+                Authorization: `Bearer ${getUserToken()}`,
+              },
+            }
+          );
+          if (!data.error) {
+            alert("Item successfully deleted.");
+            window.location.reload();
+          } else {
+            window.alert(data.msg);
+          }
+        }
+      } catch (error) {}
     },
   },
 };

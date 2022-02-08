@@ -46,8 +46,11 @@ export default {
         }
       );
       if (!data.error) {
+        alert(data.msg);
         this.$router.push("/");
-        window?.location?.reload();
+        // window?.location?.reload();
+      } else {
+        alert(data.msg);
       }
     },
   },
