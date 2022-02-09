@@ -18,12 +18,24 @@
         placeholder="Amount available"
         v-model="amountAvailable"
       />
-      <input
+      <!--<input
         class="p-2 rounded border border-solid"
         type="text"
         placeholder="Cost"
         v-model="cost"
-      />
+      />-->
+
+      <div>
+        <label for="cost">Cost:</label>
+
+        <select v-model="cost" options="options">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
 
       <input
         class="cursor-pointer p-2 rounded border border-solid"
@@ -43,7 +55,7 @@ export default {
     return {
       productName: "",
       amountAvailable: "",
-      cost: "",
+      cost: "5",
     };
   },
   methods: {

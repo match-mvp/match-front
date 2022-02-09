@@ -6,12 +6,24 @@
       @submit="depositFn"
       class="w-2/6 flex justify-center flex-col space-y-4 bg-white rounded-lg p-4 space-y-2 overflow-hidden"
     >
-      <input
+      <!--<input
         class="p-2 rounded border border-solid"
         type="text"
         placeholder="Amount to deposit"
         v-model="deposit"
-      />
+      />-->
+      <div>
+        <label for="cost">Cost:</label>
+
+        <select v-model="deposit" options="options">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+
       <input
         class="cursor-pointer p-2 rounded border border-solid"
         type="submit"
@@ -28,7 +40,7 @@ export default {
   name: "DepositPage",
   data() {
     return {
-      deposit: "",
+      deposit: "5",
     };
   },
   methods: {
