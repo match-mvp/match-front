@@ -13,9 +13,22 @@
         class="w-2/6 flex justify-center flex-col space-y-4 bg-white rounded-lg p-4 space-y-2 overflow-hidden"
       >
         <input
+          class="p-2 rounded border border-solid"
+          type="text"
+          placeholder="Username"
+          v-model="username"
+        />
+        <input
+          class="p-2 rounded border border-solid"
+          type="password"
+          placeholder="Password"
+          v-model="password"
+        />
+
+        <input
           class="cursor-pointer p-2 rounded border border-solid"
           type="submit"
-          value="LogOut All"
+          value="Log Out All"
         />
       </form>
     </div>
@@ -28,23 +41,31 @@ import { getUserToken, getUserObj } from "./../utils";
 export default {
   name: "LogOutAllPage",
   data() {
-    return {};
+    return {
+      username: "",
+      password: "",
+    };
   },
   methods: {
     logOutAllFn: async function (e: any) {
       e.preventDefault();
-      const data = await this.$axios.$post(
-        "http://localhost:4000/api/users/logout/all",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${getUserToken()}`,
+      try {
+        const data = await this.$axios.$post(
+          "http://localhost:4000/api/users/logout/all",
+          {
+            username: this.username,
+            password: this.password,
           },
+          {
+            headers: {
+              Authorization: `Bearer ${getUserToken()}`,
+            },
+          }
+        );
+        if (!data.error) {
+          this.$router.push("/login");
         }
-      );
-      if (!data.error) {
-        this.$router.push("/login");
-      }
+      } catch (error) {}
     },
   },
 };

@@ -142,7 +142,12 @@ export default {
           }
         );
         if (!data.error) {
-          alert("Item successfully bought.");
+          alert(`  
+        Item successfully bought.
+        Total Spent: ${data?.totalSpent}\n
+        Change: USD${data?.change}
+
+        `);
           window.location.reload();
         } else {
           window.alert(data.msg);

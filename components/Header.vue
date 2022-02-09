@@ -83,11 +83,26 @@ export default Vue.extend({
       }
     },
     logoutFn: async function () {
-      window.localStorage.removeItem("token");
-      window.localStorage.removeItem("user");
-      this.token = null;
-      this.user = {};
-      this.$router.push("/login");
+      const data = await this.$axios.$post(
+        "http://localhost:4000/api/users/logout",
+        {
+          id: this.user.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        }
+      );
+      if (!data.error) {
+        window.localStorage.removeItem("token");
+        window.localStorage.removeItem("user");
+        this.token = null;
+        this.user = {};
+        this.$router.push("/login");
+      } else {
+        alert(data.error);
+      }
     },
   },
 });
