@@ -55,6 +55,13 @@ export default Vue.extend({
       user: {},
     };
   },
+  watch: {
+    $route(to, from) {
+      const token = getUserToken();
+      this.token = token;
+      this.user = getUserObj();
+    },
+  },
   async created() {
     const token = getUserToken();
     this.token = token;

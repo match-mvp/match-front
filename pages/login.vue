@@ -54,7 +54,10 @@ export default {
         window.localStorage.setItem("user", JSON.stringify(data.user));
         this.$router.push("/");
       } else {
-        alert(data.msg);
+        if (data.actionRoute) {
+          alert(data.msg);
+          this.$router.push(data.actionRoute);
+        } else alert(data.msg);
       }
     },
   },
