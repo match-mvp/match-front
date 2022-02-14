@@ -37,7 +37,7 @@
           <a class="bg-white drop-shadow p-4 rounded w-50">
             <img
               src="https://tailwindcss.com/img/card-top.jpg"
-              width="200"
+              width="250"
               height="200"
               class="w-50 mb-3"
             />

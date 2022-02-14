@@ -30,6 +30,7 @@
         type="number"
         placeholder="Deposit"
         v-model="deposit"
+        v-if="selected === 'buyer'"
       />
       <div>
         <label for="cars">Choose a role:</label>
