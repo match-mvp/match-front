@@ -66,20 +66,27 @@ export default Vue.extend({
   },
   methods: {
     registerFn: async function (e: any) {
-      e.preventDefault();
-      if (this.password !== this.retypePassword)
-        alert("Passwords does not match.");
-      const data = await this.$axios.$post("http://localhost:4000/api/users", {
-        username: this.username,
-        password: this.password,
-        deposit: +this.deposit,
-        role: this.selected,
-      });
+      try {
+        e.preventDefault();
+        if (this.password !== this.retypePassword)
+          alert("Passwords does not match.");
+        const data = await this.$axios.$post(
+          "http://localhost:4000/api/users",
+          {
+            username: this.username,
+            password: this.password,
+            deposit: +this.deposit,
+            role: this.selected,
+          }
+        );
 
-      if (!data.error) {
-        window.localStorage.setItem("token", data.token);
-        window.localStorage.setItem("user", JSON.stringify(data.user));
-        this.$router.push("/");
+        if (!data.error) {
+          window.localStorage.setItem("token", data.token);
+          window.localStorage.setItem("user", JSON.stringify(data.user));
+          this.$router.push("/");
+        }
+      } catch (error) {
+        alert(error);
       }
     },
   },
